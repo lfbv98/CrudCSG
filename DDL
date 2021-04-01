@@ -1,0 +1,32 @@
+CREATE TABLE department (
+    id int NOT NULL AUTO_INCREMENT,
+    name varchar(45) NOT NULL,
+    location varchar(45) NOT NULL,
+    PRIMARY KEY (id)
+);
+CREATE TABLE employee (
+    id int NOT NULL AUTO_INCREMENT,
+    name varchar(45) NOT NULL,
+    salary int NOT NULL,
+	depto_id int NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_EmployeeDept FOREIGN KEY (depto_id)
+    REFERENCES department(id)
+);
+//se alimenta la tabla department
+Insert into department (name,location) values("Executive","Sydney");
+Insert into department (name,location) values("Production","Sydney");
+Insert into department (name,location) values("Resources","Cape Town");
+Insert into department (name,location) values("Technical","Texas");
+Insert into department (name,location) values("Management","Paris");
+
+//se alimenta la tabla employee
+Insert into employee (name,salary,depto_id) values("Candice",4685,1);
+Insert into employee (name,salary,depto_id) values("Julia",2559,2);
+Insert into employee (name,salary,depto_id) values("Bob",4405,4);
+Insert into employee (name,salary,depto_id) values("Scarlet",2350,1);
+Insert into employee (name,salary,depto_id) values("Ilena",1151,4);
+
+//Query para Totalizar el número de empleados por departamento (Incluyendo los departamentos que no tienen empleados) Organizados de mayor a menor.
+SELECT id as IdDepartment, (SELECT count(e.id) from employee e where e.depto_id = d.id) as  NumEmpleados from department d order by NumEmpleados DESC;
+
